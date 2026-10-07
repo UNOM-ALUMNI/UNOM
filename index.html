@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Madras - Alumni Association</title>
+    <style>
+        :root {
+            --primary: #8B3A2B;       /* Deep Heritage Brick Red */
+            --primary-dark: #6E2C1F;  /* Deep Terracotta for footers/accents */
+            --primary-light: #A74C3B; /* Lighter brick tone for hover states */
+            --pure-white: #ffffff;    /* Pure White background */
+            --border-stone: #E6D5CC;  /* Soft masonry-inspired border tone */
+            --text-main: #241410;     /* Deep antiqued espresso for text */
+            --text-muted: #66524C;    /* Muted earthy brown for subtexts */
+            --bg-card-tint: #FAF6F4;  /* Soft tinted background for legacy cards */
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--pure-white);
+            color: var(--text-main);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-stone);
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-container img {
+            height: 65px;
+            width: auto;
+            object-fit: contain;
+            background: #ffffff;
+            padding: 2px;
+            border-radius: 4px;
+            border: 1px solid var(--border-stone);
+        }
+
+        .logo-title h1 {
+            font-size: 1.15rem;
+            margin: 0;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-title p {
+            font-size: 0.75rem;
+            margin: 0;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            margin-left: 1.75rem;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--pure-white);
+            padding: 5rem 2rem 6rem 2rem;
+            border-bottom: 1px solid var(--border-stone);
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--pure-white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-content h2 {
+            font-size: 3.2rem;
+            margin: 0 0 1rem 0;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.12;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-content h2 span {
+            color: var(--text-main);
+        }
+
+        .hero-content p {
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.1s;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(139, 58, 43, 0.2);
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline-custom {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+            padding: 0.8rem 1.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .btn-outline-custom:hover {
+            background-color: rgba(139, 58, 43, 0.05);
+        }
+
+        .senate-img-container {
+            width: 100%;
+            height: 420px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(139, 58, 43, 0.12);
+            border: 2px solid var(--border-stone);
+            background-color: var(--pure-white);
+        }
+
+        .senate-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Stats Section */
+        .stats-container {
+            max-width: 1200px;
+            margin: -3.5rem auto 3rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .stat-card {
+            background: var(--pure-white);
+            padding: 2rem 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-stone);
+            box-shadow: 0 8px 25px rgba(139, 58, 43, 0.06);
+            text-align: center;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(139, 58, 43, 0.12);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Our Legacy Section Styles */
+        .legacy-section {
+            background-color: var(--pure-white);
+            padding: 2rem 2rem 4rem 2rem;
+        }
+
+        .legacy-badge {
+            display: inline-block;
+            background-color: #F4EBE8;
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-stone);
+        }
+
+        .legacy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .legacy-card {
+            background: var(--bg-card-tint);
+            border: 1px solid var(--border-stone);
+            border-radius: 14px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .legacy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(139, 58, 43, 0.08);
+        }
+
+        .legacy-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 65px;
+            height: 65px;
+            background: var(--pure-white);
+            border-radius: 50%;
+            border: 1px solid var(--border-stone);
+            box-shadow: 0 4px 10px rgba(139, 58, 43, 0.05);
+            margin-bottom: 1.25rem;
+        }
+
+        .legacy-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--primary);
+        }
+
+        .legacy-card h3 {
+            font-size: 1.35rem;
+            color: var(--primary);
+            margin: 0 0 1rem 0;
+            font-weight: 700;
+        }
+
+        .legacy-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Achievers Grid */
+        .achievers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .achiever-card {
+            background: var(--pure-white);
+            border: 1px solid var(--border-stone);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .achiever-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(139, 58, 43, 0.1);
+        }
+
+        .achiever-img-container {
+            height: 260px;
+            width: 100%;
+            background-color: var(--pure-white);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-stone);
+        }
+
+        .achiever-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .achiever-card:hover .achiever-img-container img {
+            transform: scale(1.03);
+        }
+
+        .achiever-info {
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .achiever-info h3 {
+            margin: 0 0 0.25rem 0;
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .achiever-field {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.75px;
+        }
+
+        .achiever-info p {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin: 0 0 0.75rem 0;
+            line-height: 1.5;
+        }
+
+        /* Registration Form Section */
+        .form-section {
+            background-color: var(--pure-white);
+            border-top: 1px solid var(--border-stone);
+            border-bottom: 1px solid var(--border-stone);
+            padding: 5rem 2rem;
+        }
+
+        .form-card {
+            max-width: 750px;
+            margin: 0 auto;
+            background: var(--pure-white);
+            padding: 3.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-stone);
+            box-shadow: 0 8px 30px rgba(139, 58, 43, 0.06);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-stone);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background-color: var(--pure-white);
+            color: var(--text-main);
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 58, 43, 0.12);
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.95rem 1.5rem;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 12px rgba(139, 58, 43, 0.2);
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--pure-white);
+            padding: 4rem 2rem 2rem 2rem;
+            border-top: 3px solid var(--primary);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1.2fr 1.3fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .footer-col h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 1.25rem;
+            color: var(--pure-white);
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-brand img {
+            height: 65px;
+            width: auto;
+            background: #ffffff;
+            padding: 4px;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            object-fit: contain;
+        }
+
+        .footer-brand h4 {
+            font-size: 0.95rem;
+            margin: 0 0 0.25rem 0;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+
+        .footer-brand p {
+            font-size: 0.8rem;
+            margin: 0;
+            color: #E6D5CC;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #E6D5CC;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .footer-col p {
+            font-size: 0.92rem;
+            margin: 0 0 0.75rem 0;
+            color: #E6D5CC;
+            line-height: 1.5;
+        }
+
+        .footer-col p strong {
+            color: #ffffff;
+        }
+
+        .footer-col a.footer-email {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 200px;
+            background-color: #4A1D14;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0 auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.85rem;
+            color: #D6C2B8;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .hero-content h2 {
+                font-size: 2.4rem;
+            }
+            nav {
+                display: none;
+            }
+            .senate-img-container {
+                height: 280px;
+            }
+            .stats-container {
+                margin-top: -2rem;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <img src="uomlog.jpg" alt="University of Madras Logo">
+            <div class="logo-title">
+                <h1>University of Madras</h1>
+                <p>Alumni Association</p>
+            </div>
+        </div>
+        <nav>
+            <a href="#home" class="active">Home</a>
+            <a href="#executive-committee">Executive Committee</a>
+            <a href="#members">UNOM Members</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact Us</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="hero-badge">Established 1857 • Heritage Campus</span>
+                <h2>Connecting Generations, <span>Inspiring Futures</span></h2>
+                <p>Welcome to the official global network of University of Madras graduates. Connect with peers, mentor scholars, and celebrate a world-class legacy of academic and social transformation.</p>
+                <div class="hero-buttons">
+                    <a href="#register" class="btn-primary-custom">Register as Alumni</a>
+                    <a href="#achievers" class="btn-outline-custom">Explore Achievers</a>
+                </div>
+            </div>
+            <div>
+                <div class="senate-img-container">
+                    <img src="SenateHouseunom.jpg" alt="Senate House, Chepauk Campus">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="stats-container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">170+</div>
+                <div class="stat-label">Years of Excellence</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100K+</div>
+                <div class="stat-label">UNOM Alumni worldwide</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">35.5K+</div>
+                <div class="stat-label">Post Graduate Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3.2K+</div>
+                <div class="stat-label">UNOM Membership</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Legacy Section with Matching Logos -->
+    <section class="legacy-section">
+        <div class="section-header" style="margin-bottom: 2.5rem;">
+            <span class="legacy-badge">Our Legacy</span>
+            <h2>A Proud Tradition of Excellence Since 1857</h2>
+            <p>One of India's premier and oldest state universities, nurturing generations of pioneers in science, humanities, arts, and governance.</p>
+        </div>
+
+        <div class="legacy-grid">
+            <!-- Legacy Card 1: Academic Legacy -->
+            <div class="legacy-card">
+                <div class="legacy-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+                </div>
+                <h3>Academic Legacy</h3>
+                <p>Producing global pioneers, Nobel laureates, world-class scientists, and visionary statesmen since the pre-independence era.</p>
+            </div>
+
+            <!-- Legacy Card 2: Global Network -->
+            <div class="legacy-card">
+                <div class="legacy-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                </div>
+                <h3>Global Network</h3>
+                <p>Hundreds of thousands of alumni making transformative contributions across governance, research, tech, and arts worldwide.</p>
+            </div>
+
+            <!-- Legacy Card 3: Social Impact -->
+            <div class="legacy-card">
+                <div class="legacy-icon">
+                    <svg viewBox="0 0 24 24"><path d="M20.5 6c-2.61.7-5.67 1.5-8.5 1.5S6.11 6.7 3.5 6C2.14 5.64 1 6.69 1 8.09v9.11c0 .77.56 1.44 1.32 1.56 2.76.43 5.76 1.16 8.68 2.06.6.18 1.25.18 1.85 0 2.92-.9 5.92-1.63 8.68-2.06.76-.12 1.32-.79 1.32-1.56V8.09c0-1.4-1.14-2.45-2.5-2.09zM11 17.85c-2.43-.72-5.06-1.31-7-1.7V9.32c1.94.46 4.54 1.12 7 1.83v6.7zm10-1.7c-1.94.39-4.57.98-7 1.7V11.15c2.46-.71 5.06-1.37 7-1.83v6.83z"/></svg>
+                </div>
+                <h3>Social Impact</h3>
+                <p>Committed to community welfare, institutional advancement, and philanthropic leadership across public sectors.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notable Achievers Section -->
+    <section id="achievers" class="container" style="padding-top: 1rem;">
+        <div class="section-header">
+            <h2>Hall of Fame & Notable Achievers</h2>
+            <p>Honoring legendary minds, scientists, and leaders shaped by our institution.</p>
+        </div>
+
+        <div class="achievers-grid">
+            
+            <!-- Sir C.V. Raman -->
+            <div class="achiever-card">
+                <div class="achiever-img-container">
+                    <img src="cvsanmugam.jpg" alt="Sir C.V. Raman">
+                </div>
+                <div class="achiever-info">
+                    <h3>Sir C.V. Raman</h3>
+                    <div class="achiever-field">Physics & Science</div>
+                    <p><strong>Achievement:</strong> Discovered the Raman Effect regarding the scattering of light.</p>
+                    <p><strong>Accolade:</strong> Recipient of the Nobel Prize in Physics (1930), the first Asian to win a Nobel Prize in science.</p>
+                </div>
+            </div>
+
+            <!-- Dr. A.P.J. Abdul Kalam (Updated Image) -->
+            <div class="achiever-card">
+                <div class="achiever-img-container">
+                    <img src="apjabdulkalamm.png" alt="Dr. A.P.J. Abdul Kalam">
+                </div>
+                <div class="achiever-info">
+                    <h3>Dr. A.P.J. Abdul Kalam</h3>
+                    <div class="achiever-field">Aerospace & Leadership</div>
+                    <p><strong>Achievement:</strong> Led India's missile development and civilian space program breakthroughs.</p>
+                    <p><strong>Accolade:</strong> Served as the 11th President of India; awarded the Bharat Ratna.</p>
+                </div>
+            </div>
+
+            <!-- Srinivasa Ramanujan -->
+            <div class="achiever-card">
+                <div class="achiever-img-container">
+                    <img src="srinivasaramanujan.jpg" alt="Srinivasa Ramanujan">
+                </div>
+                <div class="achiever-info">
+                    <h3>Srinivasa Ramanujan</h3>
+                    <div class="achiever-field">Mathematics</div>
+                    <p><strong>Achievement:</strong> Prolific contributions to mathematical analysis, number theory, and infinite series.</p>
+                    <p><strong>Accolade:</strong> Elected as a Fellow of the Royal Society (FRS) in London.</p>
+                </div>
+            </div>
+
+            <!-- Subrahmanyan Chandrasekhar -->
+            <div class="achiever-card">
+                <div class="achiever-img-container">
+                    <img src="SubrahmanyanChandrasekhar.PNG" alt="Subrahmanyan Chandrasekhar">
+                </div>
+                <div class="achiever-info">
+                    <h3>Subrahmanyan Chandrasekhar</h3>
+                    <div class="achiever-field">Astrophysics</div>
+                    <p><strong>Achievement:</strong> Calculated the mass limit of white dwarf stars (Chandrasekhar Limit).</p>
+                    <p><strong>Accolade:</strong> Awarded the Nobel Prize in Physics (1983).</p>
+                </div>
+            </div>
+
+            <!-- M.S. Swaminathan -->
+            <div class="achiever-card">
+                <div class="achiever-img-container">
+                    <img src="Swaminathan.png" alt="M.S. Swaminathan">
+                </div>
+                <div class="achiever-info">
+                    <h3>M.S. Swaminathan</h3>
+                    <div class="achiever-field">Agricultural Science</div>
+                    <p><strong>Achievement:</strong> Principal architect of India's Green Revolution, preventing massive food crises.</p>
+                    <p><strong>Accolade:</strong> Recipient of the Padma Vibhushan and World Food Prize.</p>
+                </div>
+            </div>
+
+            <!-- Dr. Sarvepalli Radhakrishnan -->
+            <div class="achiever-card">
+                <div class="achiever-img-container">
+                    <img src="SarvepalliRadhakrishnan.jpg" alt="Dr. Sarvepalli Radhakrishnan">
+                </div>
+                <div class="achiever-info">
+                    <h3>Dr. Sarvepalli Radhakrishnan</h3>
+                    <div class="achiever-field">Philosophy & Governance</div>
+                    <p><strong>Achievement:</strong> Prominent philosopher-statesman who bridged Eastern and Western thought.</p>
+                    <p><strong>Accolade:</strong> Served as the 2nd President of India; birthday celebrated as Teachers' Day.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section id="register" class="form-section">
+        <div class="form-card">
+            <div class="section-header" style="margin-bottom: 2rem;">
+                <h2>Alumni Directory Registration</h2>
+                <p>Register to stay connected with your alma mater and fellow graduates.</p>
+            </div>
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Dr./Mr./Ms. Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="name@example.com" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Graduation Year</label>
+                        <input type="text" placeholder="e.g., 2018" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Department / Affiliated College</label>
+                        <input type="text" placeholder="e.g., Department of Economics" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Current Profession & Designation</label>
+                    <input type="text" placeholder="e.g., Professor, Scientist, Executive">
+                </div>
+                <button type="submit" class="submit-btn">Submit Registration</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-container">
+            <!-- Brand / Logo Column -->
+            <div class="footer-col footer-brand">
+                <img src="uomlog.jpg" alt="University of Madras Logo">
+                <h4>UNIVERSITY OF MADRAS</h4>
+                <p>ALUMNI ASSOCIATION</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#achievers">Photo Gallery</a></li>
+                    <li><a href="#register">Feedback</a></li>
+                    <li><a href="#register">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="footer-col">
+                <h3>Contact Information</h3>
+                <p><strong>Address:</strong><br>Chepauk, Chennai – 600005,<br>Tamil Nadu, India.</p>
+                <p><strong>Contact Detail:</strong><br>044 25399476</p>
+                <p><strong>Email ID:</strong><br><a href="mailto:unomlibrary@gmail.com" class="footer-email">unomlibrary@gmail.com</a></p>
+            </div>
+
+            <!-- Location Map -->
+            <div class="footer-col">
+                <h3>Location Map</h3>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49156.739241475254!2d80.22044954978678!3d13.023658373461394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5268a1bb501c95%3A0xcdf621c5606c77de!2sUniversity%20of%20Madras!5e1!3m2!1sen!2sin!4v1791400017668!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 University of Madras Alumni Association. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
